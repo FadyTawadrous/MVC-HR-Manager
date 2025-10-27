@@ -55,12 +55,21 @@ namespace Tiers.PL
             {
                 var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
                 context.Database.EnsureCreated();
-                context.Employees.AddRange(
-                    new Employee ( "Fady", 20000, "Admin" ),
-                    new Employee("Ahmed", 46000, "Admin2")
 
-                );
-                context.SaveChanges();
+                if (!context.Departments.Any() && !context.Employees.Any())
+                {
+                    var hr = new Department("HR", "Cairo", "Fady");
+                    var it = new Department("IT", "Alex", "Ahmed");
+
+                    context.Departments.AddRange(hr, it);
+                    context.SaveChanges();
+
+                    context.Employees.AddRange(
+                    new Employee("Fady", 20000, 30, "fady.jpg", hr.Id, "Admin"),
+                    new Employee("Ahmed", 46000, 28, "ahmed.jpg", it.Id, "Admin2")
+                    );
+                    context.SaveChanges();
+                }
             }
 
 
