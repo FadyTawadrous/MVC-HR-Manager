@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tiers.BLL.AutoMapper;
 using Tiers.BLL.Service.Abstraction;
 using Tiers.BLL.Service.Implementation;
 using Tiers.DAL.Repo.Abstraction;
@@ -17,6 +18,7 @@ namespace Tiers.BLL.Common
         {
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IDepartmentService, DepartmentService>();
+            services.AddAutoMapper(x => x.AddProfile(new DomainProfile()));
             return services;
         }
     }

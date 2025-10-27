@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using Tiers.DAL.Common;
+using Tiers.BLL.AutoMapper;
 using Tiers.BLL.Common;
+using Tiers.DAL.Common;
 using Tiers.DAL.Database;
 using Tiers.DAL.Entity;
 
@@ -28,6 +29,9 @@ namespace Tiers.PL
 
             builder.Services.AddBusinessInDAL();
             builder.Services.AddBusinessInBLL();
+
+            //builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 
             var app = builder.Build();
 

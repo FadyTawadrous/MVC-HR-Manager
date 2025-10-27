@@ -1,5 +1,4 @@
-﻿using Tiers.BLL.ModelVM.Employee;
-
+﻿
 namespace Tiers.BLL.ModelVM.Department
 {
     public class GetDepartmentVM
