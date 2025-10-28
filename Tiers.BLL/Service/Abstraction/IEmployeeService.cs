@@ -7,6 +7,7 @@ namespace Tiers.BLL.Service.Abstraction
         Task<ResponseResult<IEnumerable<GetEmployeeVM>>> GetAllAsync();
         Task<ResponseResult<GetEmployeeVM>> GetByIdAsync(int id);
 
+        Task<ResponseResult<CreateEmployeeVM>> GetCreateModelAsync();
         Task<ResponseResult<bool>> CreateAsync(CreateEmployeeVM model);
 
         Task<ResponseResult<UpdateEmployeeVM>> GetUpdateModelAsync(int id);

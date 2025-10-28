@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using Tiers.DAL.Repo.Abstraction;
 
 namespace Tiers.DAL.Repo.Implementation
@@ -64,13 +62,10 @@ namespace Tiers.DAL.Repo.Implementation
                 {
                     return false;
                 }
+
                 var result = await _db.Departments.AddAsync(newDepartment);
-                if (result.Entity.Id <= 0) // care about this, id is given only after save changes
-                {
-                    return false;
-                }
                 await _db.SaveChangesAsync();
-                return true;
+                return result.Entity.Id > 0;
             }
             catch (Exception)
             {

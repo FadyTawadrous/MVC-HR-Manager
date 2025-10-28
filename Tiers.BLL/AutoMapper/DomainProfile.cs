@@ -12,27 +12,29 @@ namespace Tiers.BLL.AutoMapper
             CreateMap<Employee, GetEmployeeVM>()
                 .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department != null ? src.Department.Name : ""));
 
-            CreateMap<CreateEmployeeVM, Employee>()
-                .ForMember(dest => dest.ImageUrl, opt => opt.Ignore()); // ImageUrl set after upload
+            //CreateMap<CreateEmployeeVM, Employee>()
+            //    .ForMember(dest => dest.ImageUrl, opt => opt.Ignore()); // ImageUrl set after upload
 
             CreateMap<Employee, UpdateEmployeeVM>()
                 .ForMember(dest => dest.Image, opt => opt.Ignore())
                 .ForMember(dest => dest.Departments, opt => opt.Ignore());
 
-            CreateMap<UpdateEmployeeVM, Employee>()
-                .ForMember(dest => dest.ImageUrl, opt => opt.Ignore());
+            //CreateMap<UpdateEmployeeVM, Employee>()
+            //    .ForMember(dest => dest.ImageUrl, opt => opt.Ignore());
 
-            CreateMap<Employee, DeleteEmployeeVM>();
-            CreateMap<DeleteEmployeeVM, Employee>()
-                .ForMember(dest => dest.ImageUrl, opt => opt.Ignore());
+            CreateMap<Employee, DeleteEmployeeVM>()
+                .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department != null ? src.Department.Name : ""));
+            //CreateMap<DeleteEmployeeVM, Employee>()
+            //    .ForMember(dest => dest.ImageUrl, opt => opt.Ignore());
 
             // Department mappings
             CreateMap<Department, GetDepartmentVM>()
                 .ForMember(dest => dest.EmployeeCount, opt => opt.MapFrom(src => src.Employees != null ? src.Employees.Count : 0));
 
-            CreateMap<CreateDepartmentVM, Department>();
-            CreateMap<UpdateDepartmentVM, Department>().ReverseMap();
             CreateMap<Department, DeleteDepartmentVM>();
+            CreateMap<Department, UpdateDepartmentVM>();
+            //CreateMap<CreateDepartmentVM, Department>();
+            //CreateMap<UpdateDepartmentVM, Department>().ReverseMap();
         }
 
     }

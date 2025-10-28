@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using Tiers.DAL.Repo.Abstraction;
 
 namespace Tiers.DAL.Repo.Implementation
@@ -86,7 +85,7 @@ namespace Tiers.DAL.Repo.Implementation
                 {
                     return false;
                 }
-                bool result = oldEmployee.Update(newEmployee.Name, newEmployee.Salary, newEmployee.DepartmentId, "Fady");
+                bool result = oldEmployee.Update(newEmployee.Name, newEmployee.Salary, newEmployee.DepartmentId, newEmployee.UpdatedBy, newEmployee.Age, newEmployee.ImageUrl);
                 if (result)
                 {
                     await _db.SaveChangesAsync();
@@ -123,5 +122,17 @@ namespace Tiers.DAL.Repo.Implementation
             }
         }
 
+        public async Task<bool> SaveChangesAsync()
+        {
+            try
+            {
+                // SaveChangesAsync returns the number of rows affected
+                return await _db.SaveChangesAsync() > 0;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

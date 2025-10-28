@@ -30,7 +30,7 @@
 
         public int DepartmentId { get; private set; }
         public virtual Department Department { get; private set; }
-        public bool Update(string name, decimal salary, int departmentId, string userModified)
+        public bool Update(string name, decimal salary, int departmentId, string userModified, int age, string imageUrl)
         {
             if (!userModified.IsNullOrEmpty())
             {
@@ -39,6 +39,8 @@
                 UpdatedOn = DateTime.Now;
                 UpdatedBy = userModified;
                 DepartmentId = departmentId;
+                Age = age;
+                ImageUrl = imageUrl;
                 return true;
             }
             return false;

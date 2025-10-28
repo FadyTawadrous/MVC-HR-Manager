@@ -16,6 +16,8 @@ namespace Tiers.BLL.ModelVM.Employee
 
         public IFormFile? Image { get; set; }
 
+        public string? ImageUrl { get; set; }
+
         [Required]
         public string CreatedBy { get; set; } = string.Empty;
 
