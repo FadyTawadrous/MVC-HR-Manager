@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 using Tiers.DAL.Repo.Abstraction;
 
 namespace Tiers.DAL.Repo.Implementation
@@ -12,15 +13,24 @@ namespace Tiers.DAL.Repo.Implementation
             _db = context;
         }
 
-        public async Task<IEnumerable<Employee>> GetAllAsync(Expression<Func<Employee, bool>>? filter = null)
+        public async Task<IEnumerable<Employee>> GetAllAsync(Expression<Func<Employee, bool>>? filter = null,
+            params Expression<Func<Employee, object>>[] includes)
         {
             try
             {
+                IQueryable<Employee> query = _db.Employees;
+
                 if (filter != null)
                 {
-                    return await _db.Employees.Where(filter).ToListAsync();
+                    query = query.Where(filter);
                 }
-                return await _db.Employees.ToListAsync();
+
+                foreach (var include in includes)
+                {
+                    query = query.Include(include);
+                }
+
+                return await query.ToListAsync();
             }
             catch (Exception)
             {
@@ -32,7 +42,7 @@ namespace Tiers.DAL.Repo.Implementation
         {
             try
             {
-                var emp = await _db.Employees.FindAsync(id);
+                var emp = await _db.Employees.Include(e => e.Department).FirstOrDefaultAsync(e => e.Id == id);
                 if (emp != null)
                 {
                     return emp;

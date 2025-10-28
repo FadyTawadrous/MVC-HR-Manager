@@ -1,11 +1,19 @@
 ﻿using Tiers.BLL.ModelVM.Employee;
-using Tiers.BLL.Responses;
 
 namespace Tiers.BLL.Service.Abstraction
 {
     public interface IEmployeeService
     {
-        Task<ResponseResult<List<GetEmployeeVM>>> GetActiveEmployees();
-        Task<ResponseResult<List<GetEmployeeVM>>> GetNotActiveEmployees();
+        Task<ResponseResult<IEnumerable<GetEmployeeVM>>> GetAllAsync();
+        Task<ResponseResult<GetEmployeeVM>> GetByIdAsync(int id);
+
+        Task<ResponseResult<bool>> CreateAsync(CreateEmployeeVM model);
+
+        Task<ResponseResult<UpdateEmployeeVM>> GetUpdateModelAsync(int id);
+        Task<ResponseResult<bool>> UpdateAsync(UpdateEmployeeVM model);
+
+        Task<ResponseResult<DeleteEmployeeVM>> GetDeleteModelAsync(int id);
+        Task<ResponseResult<bool>> DeleteAsync(DeleteEmployeeVM model);
+
     }
 }

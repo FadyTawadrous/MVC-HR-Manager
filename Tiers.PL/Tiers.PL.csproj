@@ -19,4 +19,8 @@
     <ProjectReference Include="..\Tiers.BLL\Tiers.BLL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Images\" />
+  </ItemGroup>
+
 </Project>

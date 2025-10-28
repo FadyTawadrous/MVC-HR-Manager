@@ -6,7 +6,9 @@ namespace Tiers.DAL.Repo.Abstraction
     {
         // Query Methods
         Task<Employee?> GetByIdAsync(int id);
-        Task<IEnumerable<Employee>> GetAllAsync(Expression<Func<Employee, bool>>? Filter = null);
+        Task<IEnumerable<Employee>> GetAllAsync(
+            Expression<Func<Employee, bool>>? Filter = null,
+            params Expression<Func<Employee, object>>[] includes);
 
         // Command Methods
         Task<bool> AddAsync(Employee newEmployee);

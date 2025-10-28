@@ -1,16 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tiers.BLL.ModelVM.Employee;
-using Tiers.BLL.Responses;
+﻿using Tiers.BLL.ModelVM.Department;
 
 namespace Tiers.BLL.Service.Abstraction
 {
-    public class IDepartmentService
+    public interface IDepartmentService
     {
-        Task<ResponseResult<List<GetEmployeeVM>>> GetActiveEmployees();
-        Task<ResponseResult<List<GetEmployeeVM>>> GetNotActiveEmployees();
+        Task<ResponseResult<IEnumerable<GetDepartmentVM>>> GetAllAsync();
+        Task<ResponseResult<GetDepartmentVM>> GetByIdAsync(int id);
+
+        Task<ResponseResult<bool>> CreateAsync(CreateDepartmentVM model);
+
+        Task<ResponseResult<UpdateDepartmentVM>> GetUpdateModelAsync(int id);
+        Task<ResponseResult<bool>> UpdateAsync(UpdateDepartmentVM model);
+
+        Task<ResponseResult<DeleteDepartmentVM>> GetDeleteModelAsync(int id);
+        Task<ResponseResult<bool>> DeleteAsync(DeleteDepartmentVM model);
+
     }
 }

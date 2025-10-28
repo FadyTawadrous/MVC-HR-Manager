@@ -6,7 +6,9 @@ namespace Tiers.DAL.Repo.Abstraction
     {
         // Query Methods
         Task<Department?> GetByIdAsync(int id);
-        Task<IEnumerable<Department>> GetAllAsync(Expression<Func<Department, bool>>? Filter = null);
+        Task<IEnumerable<Department>> GetAllAsync(
+            Expression<Func<Department, bool>>? Filter = null,
+            params Expression<Func<Department, object>>[] includes);
 
         // Command Methods
         Task<bool> AddAsync(Department newDepartment);

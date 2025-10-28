@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Tiers.BLL.ModelVM.Department;
+﻿using Tiers.BLL.ModelVM.Department;
 using Tiers.BLL.ModelVM.Employee;
 using Tiers.DAL.Entity;
 

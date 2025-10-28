@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Tiers.BLL.ModelVM.Department;
 using Tiers.BLL.Service.Abstraction;
+using Tiers.DAL.Repo.Abstraction;
 
 namespace Tiers.BLL.Service.Implementation
 {
