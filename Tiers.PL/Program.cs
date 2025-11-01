@@ -70,7 +70,8 @@ namespace Tiers.PL
 
                     context.Employees.AddRange(
                     new Employee("Fady", 20000, 30, "testpic.png", hr.Id, "Admin"),
-                    new Employee("Ahmed", 46000, 28, "testpic2.JPG", it.Id, "Admin2")
+                    new Employee("Ahmed", 46000, 28, "testpic2.JPG", it.Id, "Admin2"),
+                    new Employee("Sara", 88000, 26, "testpic.png", hr.Id, "Admin")
                     );
                     context.SaveChanges();
                 }

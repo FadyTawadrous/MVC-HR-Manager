@@ -12,15 +12,22 @@ namespace Tiers.BLL.AutoMapper
             CreateMap<Employee, GetEmployeeVM>()
                 .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department != null ? src.Department.Name : ""));
 
-            //CreateMap<CreateEmployeeVM, Employee>()
-            //    .ForMember(dest => dest.ImageUrl, opt => opt.Ignore()); // ImageUrl set after upload
+            CreateMap<CreateEmployeeVM, Employee>()
+                .ConstructUsing(vm => new Employee(
+                    vm.Name,
+                    vm.Salary,
+                    vm.Age,
+                    vm.ImageUrl ?? string.Empty,
+                    vm.DepartmentId,
+                    vm.CreatedBy
+                    ));
 
-            CreateMap<Employee, UpdateEmployeeVM>()
-                .ForMember(dest => dest.Image, opt => opt.Ignore())
-                .ForMember(dest => dest.Departments, opt => opt.Ignore());
+            CreateMap<Employee, UpdateEmployeeVM>();
+            //.ForMember(dest => dest.Image, opt => opt.Ignore())
+            //.ForMember(dest => dest.Departments, opt => opt.Ignore());
 
-            //CreateMap<UpdateEmployeeVM, Employee>()
-            //    .ForMember(dest => dest.ImageUrl, opt => opt.Ignore());
+            CreateMap<UpdateEmployeeVM, Employee>();
+                //.ForMember(dest => dest.ImageUrl, opt => opt.Ignore());
 
             CreateMap<Employee, DeleteEmployeeVM>()
                 .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department != null ? src.Department.Name : ""));

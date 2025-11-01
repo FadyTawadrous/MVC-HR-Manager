@@ -3,4 +3,5 @@ global using Microsoft.AspNetCore.Mvc.Rendering;
 global using System.ComponentModel.DataAnnotations;
 global using Tiers.BLL.Responses;
 global using AutoMapper;
-using Tiers.BLL.Helper;
+global using Tiers.BLL.Helper;
+global using Microsoft.Extensions.DependencyInjection;

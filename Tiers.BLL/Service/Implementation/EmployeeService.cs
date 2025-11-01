@@ -93,16 +93,18 @@ namespace Tiers.BLL.Service.Implementation
                         return new ResponseResult<bool>(false, $"File upload failed: {ex.Message}", false);
                     }
                 }
+                newEmployee.ImageUrl = imageUrl;
+                var employee = _mapper.Map<Employee>(newEmployee);
 
-                //2- Create new Employee using constructor
-                Employee employee = new Employee(
-                    newEmployee.Name,
-                    newEmployee.Salary,
-                    newEmployee.Age,
-                    imageUrl,
-                    newEmployee.DepartmentId,
-                    newEmployee.CreatedBy
-                    );
+                ////2- Create new Employee using constructor
+                //Employee employee = new Employee(
+                //    newEmployee.Name,
+                //    newEmployee.Salary,
+                //    newEmployee.Age,
+                //    imageUrl,
+                //    newEmployee.DepartmentId,
+                //    newEmployee.CreatedBy
+                //    );
 
                 //3- Call the repo
                 var result = await _employeeRepo.AddAsync(employee);
@@ -182,12 +184,15 @@ namespace Tiers.BLL.Service.Implementation
                         return new ResponseResult<bool>(false, $"File update failed: {ex.Message}", false);
                     }
                 }
-
+                model.ImageUrl = newImageUrl;
+                model.UpdatedOn = DateTime.Now;
+                var employee = _mapper.Map<Employee>(model);
+                Console.WriteLine("ALL good");
                 // 3. Call the entity's OWN methods to update its state
-                employeeToUpdate.Update(model.Name, model.Salary, model.DepartmentId, model.UpdatedBy, model.Age, newImageUrl);
+                //employeeToUpdate.Update(model.Name, model.Salary, model.DepartmentId, model.UpdatedBy, model.Age, newImageUrl);
 
                 // 4. Save changes
-                var result = await _employeeRepo.SaveChangesAsync(); // Use the new repo method
+                var result = await _employeeRepo.UpdateAsync(employee); // Use the new repo method
 
                 return new ResponseResult<bool>(result, null, result);
             }

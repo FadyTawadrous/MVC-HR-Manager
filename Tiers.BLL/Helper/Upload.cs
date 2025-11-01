@@ -3,13 +3,13 @@ namespace Tiers.BLL.Helper
 {
     public static class Upload
     {
-        public static string UploadFile(string FolderName, IFormFile File)
+        public static async Task<string> UploadFileAsync(string FolderName, IFormFile File)
         {
             try
             {
                 //catch the folder Path and the file name in server
                 // 1 ) Get Directory
-                string FolderPath = Directory.GetCurrentDirectory() + "/wwwroot/" + FolderName;
+                string FolderPath = Directory.GetCurrentDirectory() + "/wwwroot/Files/" + FolderName;
 
 
                 //2) Get File Name
@@ -23,7 +23,7 @@ namespace Tiers.BLL.Helper
                 //4) Save File As Streams "Data Overtime"
                 using (var Stream = new FileStream(FinalPath, FileMode.Create))
                 {
-                    File.CopyTo(Stream);
+                    await File.CopyToAsync(Stream);
                 }
 
                 return FileName;
@@ -36,7 +36,7 @@ namespace Tiers.BLL.Helper
         }
 
 
-        public static string RemoveFile(string FolderName, string fileName)
+        public static async Task<string> RemoveFileAsync(string FolderName, string fileName)
         {
             try
             {
@@ -44,7 +44,7 @@ namespace Tiers.BLL.Helper
 
                 if (File.Exists(directory))
                 {
-                    File.Delete(directory);
+                    await Task.Run(() => File.Delete(directory));
                     return "File Deleted";
                 }
 

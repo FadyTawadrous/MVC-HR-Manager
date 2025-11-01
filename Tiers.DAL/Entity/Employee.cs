@@ -27,12 +27,11 @@
         public DateTime? UpdatedOn { get; private set; }
         public string? UpdatedBy { get; private set; }
         public bool IsDeleted { get; private set; }
-
         public int DepartmentId { get; private set; }
         public virtual Department Department { get; private set; }
         public bool Update(string name, decimal salary, int departmentId, string userModified, int age, string imageUrl)
         {
-            if (!userModified.IsNullOrEmpty())
+            if (!string.IsNullOrEmpty(userModified))
             {
                 Name = name;
                 Salary = salary;
@@ -47,7 +46,7 @@
         }
         public bool ToggleDelete(string userModified)
         {
-            if (!userModified.IsNullOrEmpty())
+            if (!string.IsNullOrEmpty(userModified))
             {
                 IsDeleted = !IsDeleted;
                 DeletedOn = DateTime.Now;

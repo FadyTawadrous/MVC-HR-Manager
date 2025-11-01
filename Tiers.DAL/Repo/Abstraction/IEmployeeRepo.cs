@@ -1,5 +1,4 @@
-﻿using System.Linq.Expressions;
-
+﻿
 namespace Tiers.DAL.Repo.Abstraction
 {
     public interface IEmployeeRepo
@@ -14,6 +13,5 @@ namespace Tiers.DAL.Repo.Abstraction
         Task<bool> AddAsync(Employee newEmployee);
         Task<bool> UpdateAsync(Employee newEmployee);
         Task<bool> ToggleDeleteStatusAsync(int id);
-        Task<bool> SaveChangesAsync();
     }
 }

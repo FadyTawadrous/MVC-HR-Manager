@@ -26,6 +26,8 @@ namespace Tiers.BLL.ModelVM.Employee
         [Required]
         public string UpdatedBy { get; set; } = string.Empty;
 
+        public DateTime UpdatedOn { get; set; }
+
         public IEnumerable<SelectListItem> Departments { get; set; } = new List<SelectListItem>();
 
     }

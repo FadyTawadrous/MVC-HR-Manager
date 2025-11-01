@@ -28,7 +28,7 @@ namespace Tiers.DAL.Entity
 
         public bool Update(string name, string area, string userModified)
         {
-            if (!userModified.IsNullOrEmpty())
+            if (!string.IsNullOrEmpty(userModified))
             {
                 Name = name;
                 Area = area;
@@ -40,7 +40,7 @@ namespace Tiers.DAL.Entity
         }
         public bool ToggleDelete(string userModified)
         {
-            if (!userModified.IsNullOrEmpty())
+            if (!string.IsNullOrEmpty(userModified))
             {
                 IsDeleted = !IsDeleted;
                 DeletedOn = DateTime.Now;

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Tiers.BLL.ModelVM.Employee;
 using Tiers.BLL.Service.Abstraction;
+using Tiers.DAL.Entity;
 
 namespace Tiers.PL.Controllers
 {
@@ -72,6 +73,7 @@ namespace Tiers.PL.Controllers
 
                 if (response.IsSuccess)
                 {
+                    TempData["SuccessMessage"] = "Employee created successfully";
                     return RedirectToAction(nameof(Index));
                 }
 
@@ -81,8 +83,8 @@ namespace Tiers.PL.Controllers
 
             // If we're here, either ModelState is invalid or service failed.
             // We MUST reload the dropdowns before returning the view.
-            var dropdownsResponse = await _employeeService.GetCreateModelAsync();
-            model.Departments = dropdownsResponse.Result?.Departments ?? new List<SelectListItem>();
+            //var dropdownsResponse = await _employeeService.GetCreateModelAsync();
+            //model.Departments = dropdownsResponse.Result?.Departments ?? new List<SelectListItem>();
 
             return View(model);
         }

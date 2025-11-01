@@ -1,5 +1,4 @@
-﻿using System.Linq.Expressions;
-using Tiers.DAL.Repo.Abstraction;
+﻿using Tiers.DAL.Repo.Abstraction;
 
 namespace Tiers.DAL.Repo.Implementation
 {
@@ -108,7 +107,7 @@ namespace Tiers.DAL.Repo.Implementation
                 {
                     return false;
                 }
-                bool result = emp.ToggleDelete(emp.DeletedBy ?? "Fady");
+                bool result = emp.ToggleDelete(emp.DeletedBy);
                 if (result)
                 {
                     await _db.SaveChangesAsync();
@@ -122,17 +121,5 @@ namespace Tiers.DAL.Repo.Implementation
             }
         }
 
-        public async Task<bool> SaveChangesAsync()
-        {
-            try
-            {
-                // SaveChangesAsync returns the number of rows affected
-                return await _db.SaveChangesAsync() > 0;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
     }
 }
