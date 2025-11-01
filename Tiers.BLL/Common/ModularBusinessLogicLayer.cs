@@ -1,5 +1,4 @@
-﻿using Tiers.BLL.AutoMapper;
-using Tiers.BLL.Service.Abstraction;
+﻿using Tiers.BLL.Service.Abstraction;
 using Tiers.BLL.Service.Implementation;
 
 namespace Tiers.BLL.Common

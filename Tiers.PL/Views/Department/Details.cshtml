@@ -1,4 +1,4 @@
-﻿@model Tiers.BLL.ModelVM.Department.GetDepartmentVM
+﻿@model GetDepartmentVM
 
 @{
     ViewData["Title"] = "Department Details";
@@ -7,32 +7,26 @@
 <h2>Details for @Model.Name Department</h2>
 <hr />
 
-<div>
-    <dl class="row">
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+<div class="row">
+    <div class="col-md-8">
+        <dl class="row">
+            <dt class="col-sm-4">ID:</dt>
+            <dd class="col-sm-8">@Model.Id</dd>
 
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.Area)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.Area)
-        </dd>
+            <dt class="col-sm-4">Name:</dt>
+            <dd class="col-sm-8">@Model.Name</dd>
 
-        <dt class="col-sm-3">
-            @Html.DisplayNameFor(model => model.EmployeeCount)
-        </dt>
-        <dd class="col-sm-9">
-            @Html.DisplayFor(model => model.EmployeeCount)
-        </dd>
-    </dl>
+            <dt class="col-sm-4">Area:</dt>
+            <dd class="col-sm-8">@Model.Area</dd>
+
+            <dt class="col-sm-4">Employee Count:</dt>
+            <dd class="col-sm-8">@Model.EmployeeCount</dd>
+        </dl>
+    </div>
 </div>
 
+
 <div class="mt-3">
-    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
     <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
 </div>

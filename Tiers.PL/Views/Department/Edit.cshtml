@@ -1,4 +1,4 @@
-﻿@model Tiers.BLL.ModelVM.Department.UpdateDepartmentVM
+﻿@model UpdateDepartmentVM
 
 @{
     ViewData["Title"] = "Edit Department";
@@ -10,42 +10,33 @@
 <div class="row">
     <div class="col-md-6">
         <form asp-action="Edit" method="post">
-
+            @Html.AntiForgeryToken()
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            @*
-              CRITICAL: The hidden Id field is required to know which department to update.
-            *@
             <input type="hidden" asp-for="Id" />
 
-            <div class="mb-3">
-                <label asp-for="Name" class="control-label"></label>
+            <div class="form-group">
+                <label asp-for="Name" class="form-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
 
-            <div class="mb-3">
-                <label asp-for="Area" class="control-label"></label>
+            <div class="form-group">
+                <label asp-for="Area" class="form-label"></label>
                 <input asp-for="Area" class="form-control" />
                 <span asp-validation-for="Area" class="text-danger"></span>
             </div>
 
-            <div class="mb-3">
-                <label asp-for="UpdatedBy" class="control-label">Updated By</label>
+            <div class="form-group">
+                <label asp-for="UpdatedBy" class="form-label">Updated By</label>
                 <input asp-for="UpdatedBy" class="form-control" />
                 <span asp-validation-for="UpdatedBy" class="text-danger"></span>
             </div>
 
-            <div class="mb-3">
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
                 <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
             </div>
         </form>
     </div>
 </div>
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}

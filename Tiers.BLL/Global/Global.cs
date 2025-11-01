@@ -5,3 +5,5 @@ global using Tiers.BLL.Responses;
 global using AutoMapper;
 global using Tiers.BLL.Helper;
 global using Microsoft.Extensions.DependencyInjection;
+global using Tiers.BLL.AutoMapper;
+global using Tiers.BLL.Service.Abstraction;

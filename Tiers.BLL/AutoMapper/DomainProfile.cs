@@ -8,7 +8,7 @@ namespace Tiers.BLL.AutoMapper
     {
         public DomainProfile()
         {
-            // Employee mappings
+            // 1- Employee mappings
             CreateMap<Employee, GetEmployeeVM>()
                 .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department != null ? src.Department.Name : ""));
 
@@ -22,26 +22,28 @@ namespace Tiers.BLL.AutoMapper
                     vm.CreatedBy
                     ));
 
-            CreateMap<Employee, UpdateEmployeeVM>();
-            //.ForMember(dest => dest.Image, opt => opt.Ignore())
-            //.ForMember(dest => dest.Departments, opt => opt.Ignore());
-
-            CreateMap<UpdateEmployeeVM, Employee>();
-                //.ForMember(dest => dest.ImageUrl, opt => opt.Ignore());
+            CreateMap<Employee, UpdateEmployeeVM>().ReverseMap();
 
             CreateMap<Employee, DeleteEmployeeVM>()
                 .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Department != null ? src.Department.Name : ""));
-            //CreateMap<DeleteEmployeeVM, Employee>()
-            //    .ForMember(dest => dest.ImageUrl, opt => opt.Ignore());
+            //CreateMap<DeleteEmployeeVM, Employee>();
 
-            // Department mappings
+            // 2- Department mappings
             CreateMap<Department, GetDepartmentVM>()
                 .ForMember(dest => dest.EmployeeCount, opt => opt.MapFrom(src => src.Employees != null ? src.Employees.Count : 0));
 
-            CreateMap<Department, DeleteDepartmentVM>();
-            CreateMap<Department, UpdateDepartmentVM>();
-            //CreateMap<CreateDepartmentVM, Department>();
-            //CreateMap<UpdateDepartmentVM, Department>().ReverseMap();
+            CreateMap<CreateDepartmentVM, Department>()
+                .ConstructUsing(vm => new Department(
+                    vm.Name,
+                    vm.Area,
+                    vm.CreatedBy
+                    ));
+
+            
+            CreateMap<Department, UpdateDepartmentVM>().ReverseMap();
+
+            CreateMap<Department, DeleteDepartmentVM>().ReverseMap();
+
         }
 
     }

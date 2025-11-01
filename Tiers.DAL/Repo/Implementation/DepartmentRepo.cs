@@ -99,7 +99,7 @@ namespace Tiers.DAL.Repo.Implementation
             }
         }
 
-        public async Task<bool> ToggleDeleteStatusAsync(int id)
+        public async Task<bool> ToggleDeleteStatusAsync(int id, string userModified)
         {
             try
             {
@@ -108,7 +108,7 @@ namespace Tiers.DAL.Repo.Implementation
                 {
                     return false;
                 }
-                bool result = dep.ToggleDelete(dep.DeletedBy);
+                bool result = dep.ToggleDelete(userModified);
                 if (result)
                 {
                     await _db.SaveChangesAsync();

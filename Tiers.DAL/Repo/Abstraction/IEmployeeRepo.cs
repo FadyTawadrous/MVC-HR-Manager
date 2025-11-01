@@ -12,6 +12,6 @@ namespace Tiers.DAL.Repo.Abstraction
         // Command Methods
         Task<bool> AddAsync(Employee newEmployee);
         Task<bool> UpdateAsync(Employee newEmployee);
-        Task<bool> ToggleDeleteStatusAsync(int id);
+        Task<bool> ToggleDeleteStatusAsync(int id, string userModified);
     }
 }

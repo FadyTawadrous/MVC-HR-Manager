@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Tiers.BLL.ModelVM.Employee;
 using Tiers.BLL.Service.Abstraction;
-using Tiers.DAL.Entity;
 
 namespace Tiers.PL.Controllers
 {
@@ -15,7 +13,6 @@ namespace Tiers.PL.Controllers
             _employeeService = employeeService;
         }
 
-        // 2. Index (GET /Employees)
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -26,11 +23,10 @@ namespace Tiers.PL.Controllers
                 return View(response.Result); // Passes IEnumerable<GetEmployeeVM>
             }
 
-            // You can pass an empty list or return an error view
+            // Return an empty list on failure
             return View(new List<GetEmployeeVM>());
         }
 
-        // 3. Details (GET /Employees/Details/5)
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
@@ -46,7 +42,7 @@ namespace Tiers.PL.Controllers
             return NotFound();
         }
 
-        // 4. Create (GET /Employees/Create)
+        // Get create view
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -58,11 +54,10 @@ namespace Tiers.PL.Controllers
                 return View(response.Result); // Passes CreateEmployeeVM
             }
 
-            // Handle error (e.g., failed to load departments)
             return RedirectToAction(nameof(Index));
         }
 
-        // 5. Create (POST /Employees/Create)
+        // Create employee
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateEmployeeVM model)
@@ -73,23 +68,20 @@ namespace Tiers.PL.Controllers
 
                 if (response.IsSuccess)
                 {
-                    TempData["SuccessMessage"] = "Employee created successfully";
+                    TempData["SuccessMessage"] = "Employee has been created successfully";
                     return RedirectToAction(nameof(Index));
                 }
 
-                // If service failed (e.g., file upload error), add error to model
                 ModelState.AddModelError(string.Empty, response.ErrorMessage);
             }
 
-            // If we're here, either ModelState is invalid or service failed.
-            // We MUST reload the dropdowns before returning the view.
-            //var dropdownsResponse = await _employeeService.GetCreateModelAsync();
-            //model.Departments = dropdownsResponse.Result?.Departments ?? new List<SelectListItem>();
-
+            // MUST reload the dropdowns before returning the view.
+            var dropdownsResponse = await _employeeService.GetCreateModelAsync();
+            model.Departments = dropdownsResponse.Result?.Departments ?? new List<SelectListItem>();
             return View(model);
         }
 
-        // 6. Edit (GET /Employees/Edit/5)
+        // Get edit view
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
@@ -106,7 +98,7 @@ namespace Tiers.PL.Controllers
             return NotFound();
         }
 
-        // 7. Edit (POST /Employees/Edit/5)
+        // Edit department
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, UpdateEmployeeVM model)
@@ -119,6 +111,7 @@ namespace Tiers.PL.Controllers
 
                 if (response.IsSuccess)
                 {
+                    TempData["SuccessMessage"] = "Employee has been updated successfully";
                     return RedirectToAction(nameof(Index));
                 }
 
@@ -128,11 +121,10 @@ namespace Tiers.PL.Controllers
             // Reload dropdowns if validation fails
             var dropdownsResponse = await _employeeService.GetUpdateModelAsync(model.Id);
             model.Departments = dropdownsResponse.Result?.Departments ?? new List<SelectListItem>();
-
             return View(model);
         }
 
-        // 8. Delete (GET /Employees/Delete/5)
+        // Get delete view
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
@@ -148,15 +140,16 @@ namespace Tiers.PL.Controllers
             return NotFound();
         }
 
-        // 9. Delete (POST /Employees/Delete/5)
-        [HttpPost, ActionName("Delete")]
+        // Delete employee
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(DeleteEmployeeVM model)
+        public async Task<IActionResult> Delete(DeleteEmployeeVM model)
         {
             var response = await _employeeService.DeleteAsync(model);
 
             if (response.IsSuccess)
             {
+                TempData["SuccessMessage"] = "Employee has been deleted successfully";
                 return RedirectToAction(nameof(Index));
             }
 

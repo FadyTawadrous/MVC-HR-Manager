@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-
+﻿
 namespace Tiers.BLL.ModelVM.Department
 {
     public class CreateDepartmentVM

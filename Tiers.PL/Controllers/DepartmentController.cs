@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Tiers.BLL.ModelVM.Department;
 using Tiers.BLL.Service.Abstraction;
 
 namespace Tiers.PL.Controllers
@@ -8,13 +7,11 @@ namespace Tiers.PL.Controllers
     {
         private readonly IDepartmentService _departmentService;
 
-        // 1. Inject the BLL service
         public DepartmentController(IDepartmentService departmentService)
         {
             _departmentService = departmentService;
         }
 
-        // 2. Index (GET /Departments)
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -29,7 +26,6 @@ namespace Tiers.PL.Controllers
             return View(new List<GetDepartmentVM>());
         }
 
-        // 3. Details (GET /Departments/Details/5)
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
@@ -45,15 +41,14 @@ namespace Tiers.PL.Controllers
             return NotFound();
         }
 
-        // 4. Create (GET /Departments/Create)
+        // Get create view
         [HttpGet]
         public IActionResult Create()
         {
-            // No service call needed, just return a new empty VM
             return View(new CreateDepartmentVM());
         }
 
-        // 5. Create (POST /Departments/Create)
+        // Create department
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateDepartmentVM model)
@@ -64,19 +59,17 @@ namespace Tiers.PL.Controllers
 
                 if (response.IsSuccess)
                 {
+                    TempData["SuccessMessage"] = "Department has been created successfully";
                     return RedirectToAction(nameof(Index));
                 }
 
-                // If service failed, add error to model
                 ModelState.AddModelError(string.Empty, response.ErrorMessage);
             }
 
-            // If we're here, ModelState is invalid or service failed.
-            // No need to reload dropdowns, so just return the view.
             return View(model);
         }
 
-        // 6. Edit (GET /Departments/Edit/5)
+        // Get edit view
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
@@ -93,7 +86,7 @@ namespace Tiers.PL.Controllers
             return NotFound();
         }
 
-        // 7. Edit (POST /Departments/Edit/5)
+        // Edit department
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, UpdateDepartmentVM model)
@@ -106,17 +99,17 @@ namespace Tiers.PL.Controllers
 
                 if (response.IsSuccess)
                 {
+                    TempData["SuccessMessage"] = "Employee has been updated successfully";
                     return RedirectToAction(nameof(Index));
                 }
 
                 ModelState.AddModelError(string.Empty, response.ErrorMessage);
             }
 
-            // No dropdowns to reload, just return the view
             return View(model);
         }
 
-        // 8. Delete (GET /Departments/Delete/5)
+        // Get delete view
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
@@ -132,15 +125,16 @@ namespace Tiers.PL.Controllers
             return NotFound();
         }
 
-        // 9. Delete (POST /Departments/Delete/5)
-        [HttpPost, ActionName("Delete")]
+        // Delete department
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(DeleteDepartmentVM model)
+        public async Task<IActionResult> Delete(DeleteDepartmentVM model)
         {
             var response = await _departmentService.DeleteAsync(model);
 
             if (response.IsSuccess)
             {
+                TempData["SuccessMessage"] = "Department has been deleted successfully";
                 return RedirectToAction(nameof(Index));
             }
 

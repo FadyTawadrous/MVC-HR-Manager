@@ -1,4 +1,4 @@
-﻿@model Tiers.BLL.ModelVM.Employee.GetEmployeeVM
+﻿@model GetEmployeeVM
 
 @{
     ViewData["Title"] = "Employee Details";
@@ -8,7 +8,7 @@
 <hr />
 
 <div class="row">
-    @* Image Column *@
+
     <div class="col-md-4">
         <img src="~/Files/Images/@(Model.ImageUrl ?? "default.png")"
              alt="@Model.Name"
@@ -16,41 +16,27 @@
              style="max-width: 100%; height: auto; object-fit: cover;">
     </div>
 
-    @* Details Column *@
     <div class="col-md-8">
         <dl class="row">
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.Name)
-            </dt>
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.Name)
-            </dd>
+            <dt class="col-sm-4">ID:</dt>
+            <dd class="col-sm-8">@Model.Id</dd>
 
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.Age)
-            </dt>
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.Age)
-            </dd>
+            <dt class="col-sm-4">Name:</dt>
+            <dd class="col-sm-8">@Model.Name</dd>
 
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.Salary)
-            </dt>
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.Salary)
-            </dd>
+            <dt class="col-sm-4">Age:</dt>
+            <dd class="col-sm-8">@Model.Age</dd>
 
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.DepartmentName)
-            </dt>
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.DepartmentName)
-            </dd>
+            <dt class="col-sm-4">Salary:</dt>
+            <dd class="col-sm-8">@Model.Salary</dd>
+
+            <dt class="col-sm-4">Department Name:</dt>
+            <dd class="col-sm-8">@Model.DepartmentName</dd>
         </dl>
     </div>
 </div>
 
 <div class="mt-3">
-    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
     <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
 </div>

@@ -1,6 +1,4 @@
-﻿using Tiers.BLL.Helper;
-using Tiers.BLL.ModelVM.Employee;
-using Tiers.BLL.Service.Abstraction;
+﻿using Tiers.BLL.ModelVM.Employee;
 using Tiers.DAL.Entity;
 using Tiers.DAL.Repo.Abstraction;
 
@@ -18,14 +16,15 @@ namespace Tiers.BLL.Service.Implementation
             _departmentRepo = departmentRepo;
             _mapper = mapper;
         }
+
         public async Task<ResponseResult<IEnumerable<GetEmployeeVM>>> GetAllAsync()
         {
             try
             {
-                var result = await _employeeRepo.GetAllAsync(e => !e.IsDeleted, includes: e => e.Department);
-                var mappedResult = _mapper.Map<IEnumerable<GetEmployeeVM>>(result);
+                var employees = await _employeeRepo.GetAllAsync(e => !e.IsDeleted, includes: e => e.Department);
+                var mappedEmployees = _mapper.Map<IEnumerable<GetEmployeeVM>>(employees);
 
-                return new ResponseResult<IEnumerable<GetEmployeeVM>>(mappedResult, null, true);
+                return new ResponseResult<IEnumerable<GetEmployeeVM>>(mappedEmployees, null, true);
             }
             catch (Exception ex)
             {
@@ -43,8 +42,8 @@ namespace Tiers.BLL.Service.Implementation
                     return new ResponseResult<GetEmployeeVM>(null, "Employee not found.", false);
                 }
 
-                var mapped = _mapper.Map<GetEmployeeVM>(employee);
-                return new ResponseResult<GetEmployeeVM>(mapped, null, true);
+                var mappedEmployee = _mapper.Map<GetEmployeeVM>(employee);
+                return new ResponseResult<GetEmployeeVM>(mappedEmployee, null, true);
             }
             catch (Exception ex)
             {
@@ -56,16 +55,18 @@ namespace Tiers.BLL.Service.Implementation
         {
             try
             {
+                // 1- Get departments from department repo
                 var departments = await _departmentRepo.GetAllAsync(d => !d.IsDeleted);
-                var departmentSelectList = departments.Select(d => new SelectListItem
-                {
-                    Value = d.Id.ToString(),
-                    Text = d.Name
-                }).ToList();
 
+                // 2- Create the CreateEmployeeVM and populate the Departments property
+                // by mapping departments to SelectListItems for the dropdown
                 var model = new CreateEmployeeVM
                 {
-                    Departments = departmentSelectList
+                    Departments = departments.Select(d => new SelectListItem
+                    {
+                        Value = d.Id.ToString(),
+                        Text = d.Name
+                    }).ToList()
                 };
 
                 return new ResponseResult<CreateEmployeeVM>(model, null, true);
@@ -80,33 +81,25 @@ namespace Tiers.BLL.Service.Implementation
         {
             try
             {
-                //1- Handle file upload
-                string? imageUrl = null;
+                // 1- Handle file upload
+                string? uploadedImageUrl = "default.png";
                 if (newEmployee.Image != null)
                 {
                     try
                     {
-                        imageUrl = Upload.UploadFile("Images", newEmployee.Image);
+                        uploadedImageUrl = await Upload.UploadFileAsync("Images", newEmployee.Image);
                     }
                     catch (Exception ex)
                     {
                         return new ResponseResult<bool>(false, $"File upload failed: {ex.Message}", false);
                     }
                 }
-                newEmployee.ImageUrl = imageUrl;
+                newEmployee.ImageUrl = uploadedImageUrl;
+
+                // 2- Map VM -> Entity
                 var employee = _mapper.Map<Employee>(newEmployee);
 
-                ////2- Create new Employee using constructor
-                //Employee employee = new Employee(
-                //    newEmployee.Name,
-                //    newEmployee.Salary,
-                //    newEmployee.Age,
-                //    imageUrl,
-                //    newEmployee.DepartmentId,
-                //    newEmployee.CreatedBy
-                //    );
-
-                //3- Call the repo
+                // 3- Call the repo to add the new employee
                 var result = await _employeeRepo.AddAsync(employee);
 
                 //4- Return the response
@@ -114,10 +107,7 @@ namespace Tiers.BLL.Service.Implementation
                 {
                     return new ResponseResult<bool>(true, null, true);
                 }
-                else
-                {
-                    return new ResponseResult<bool>(false, "Failed to save employee to the database.", false);
-                }
+                return new ResponseResult<bool>(false, "Failed to save employee to the database.", false);
             }
             catch (Exception ex)
             {
@@ -129,7 +119,7 @@ namespace Tiers.BLL.Service.Implementation
         {
             try
             {
-                // 1. Get the employee entity
+                // 1- Get the employee entity
                 var employee = await _employeeRepo.GetByIdAsync(id);
                 if (employee == null || employee.IsDeleted)
                 {
@@ -137,17 +127,17 @@ namespace Tiers.BLL.Service.Implementation
                 }
 
                 // 2. Map Entity -> VM
-                var model = _mapper.Map<UpdateEmployeeVM>(employee);
+                var mappedEmployee = _mapper.Map<UpdateEmployeeVM>(employee);
 
                 // 3. Get departments for the dropdown
                 var departments = await _departmentRepo.GetAllAsync(d => !d.IsDeleted);
-                model.Departments = departments.Select(d => new SelectListItem
+                mappedEmployee.Departments = departments.Select(d => new SelectListItem
                 {
                     Value = d.Id.ToString(),
                     Text = d.Name
                 }).ToList();
 
-                return new ResponseResult<UpdateEmployeeVM>(model, null, true);
+                return new ResponseResult<UpdateEmployeeVM>(mappedEmployee, null, true);
             }
             catch (Exception ex)
             {
@@ -155,28 +145,27 @@ namespace Tiers.BLL.Service.Implementation
             }
         }
 
-        public async Task<ResponseResult<bool>> UpdateAsync(UpdateEmployeeVM model)
+        public async Task<ResponseResult<bool>> UpdateAsync(UpdateEmployeeVM newEmployee)
         {
             try
             {
-                // 1. Get the tracked entity from the repo
-                var employeeToUpdate = await _employeeRepo.GetByIdAsync(model.Id);
-                if (employeeToUpdate == null)
+                // 1- Get the tracked entity from the repo
+                var oldEmployee = await _employeeRepo.GetByIdAsync(newEmployee.Id);
+                if (oldEmployee == null)
                 {
                     return new ResponseResult<bool>(false, "Employee not found.", false);
                 }
 
-                // 2. Handle file logic
-                string? newImageUrl = employeeToUpdate.ImageUrl;
-                if (model.Image != null)
+                // 2- Handle file upload
+                string? uploadedImageUrl = oldEmployee.ImageUrl;
+                if (newEmployee.Image != null)
                 {
                     try
                     {
-                        newImageUrl = Upload.UploadFile("Images", model.Image);
-
-                        if (!string.IsNullOrEmpty(employeeToUpdate.ImageUrl))
+                        uploadedImageUrl = await Upload.UploadFileAsync("Images", newEmployee.Image); // Upload image to server
+                        if (!string.IsNullOrEmpty(oldEmployee.ImageUrl))
                         {
-                            Upload.RemoveFile("Images", employeeToUpdate.ImageUrl);
+                            await Upload.RemoveFileAsync("Images", oldEmployee.ImageUrl); // Remove old image if exists
                         }
                     }
                     catch (Exception ex)
@@ -184,14 +173,12 @@ namespace Tiers.BLL.Service.Implementation
                         return new ResponseResult<bool>(false, $"File update failed: {ex.Message}", false);
                     }
                 }
-                model.ImageUrl = newImageUrl;
-                model.UpdatedOn = DateTime.Now;
-                var employee = _mapper.Map<Employee>(model);
-                Console.WriteLine("ALL good");
-                // 3. Call the entity's OWN methods to update its state
-                //employeeToUpdate.Update(model.Name, model.Salary, model.DepartmentId, model.UpdatedBy, model.Age, newImageUrl);
+                newEmployee.ImageUrl = uploadedImageUrl;
 
-                // 4. Save changes
+                // 3- Map VM -> Entity
+                var employee = _mapper.Map<Employee>(newEmployee);
+
+                // 4- Call the repo to update the employee
                 var result = await _employeeRepo.UpdateAsync(employee); // Use the new repo method
 
                 return new ResponseResult<bool>(result, null, result);
@@ -207,14 +194,14 @@ namespace Tiers.BLL.Service.Implementation
         {
             try
             {
-                // 1. Get the employee entity
+                // 1- Get the employee entity
                 var employee = await _employeeRepo.GetByIdAsync(id);
                 if (employee == null || employee.IsDeleted)
                 {
                     return new ResponseResult<DeleteEmployeeVM>(null, "Employee not found.", false);
                 }
 
-                // 2. Map Entity -> VM
+                // 2- Map Entity -> VM
                 var model = _mapper.Map<DeleteEmployeeVM>(employee);
 
                 return new ResponseResult<DeleteEmployeeVM>(model, null, true);
@@ -229,37 +216,33 @@ namespace Tiers.BLL.Service.Implementation
         {
             try
             {
-                // 1. Get the tracked entity
+                // 1- Get the tracked entity
                 var employeeToDelete = await _employeeRepo.GetByIdAsync(model.Id);
                 if (employeeToDelete == null)
                 {
                     return new ResponseResult<bool>(false, "Employee not found.", false);
                 }
 
-                // 2. Call the entity's logic
-                bool toggleResult = employeeToDelete.ToggleDelete(model.DeletedBy);
+                // 2- Delete the employee using the repo
+                bool toggleResult = await _employeeRepo.ToggleDeleteStatusAsync(model.Id, model.DeletedBy);
                 if (!toggleResult)
                 {
                     return new ResponseResult<bool>(false, "Failed to toggle delete status.", false);
                 }
 
-                // 3. Save changes
-                var result = await _employeeRepo.SaveChangesAsync(); // Use the new repo method
-
-                // 4. Delete the file from disk (only if delete was successful)
-                if (result && !string.IsNullOrEmpty(employeeToDelete.ImageUrl))
+                // 3- Delete the image from disk (only if delete was successful)
+                if (toggleResult && !string.IsNullOrEmpty(employeeToDelete.ImageUrl))
                 {
-                    Upload.RemoveFile("Images", employeeToDelete.ImageUrl);
+                    await Upload.RemoveFileAsync("Images", employeeToDelete.ImageUrl);
                 }
 
-                return new ResponseResult<bool>(result, null, result);
+                return new ResponseResult<bool>(toggleResult, null, toggleResult);
             }
             catch (Exception ex)
             {
                 return new ResponseResult<bool>(false, ex.Message, false);
             }
         }
-
 
     }
 }
