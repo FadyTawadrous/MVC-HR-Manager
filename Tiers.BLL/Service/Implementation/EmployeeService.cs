@@ -7,13 +7,13 @@ namespace Tiers.BLL.Service.Implementation
     public class EmployeeService : IEmployeeService
     {
         private readonly IEmployeeRepo _employeeRepo;
-        private readonly IDepartmentRepo _departmentRepo;
+        private readonly IDepartmentService _departmentService;
         private readonly IMapper _mapper;
 
-        public EmployeeService(IEmployeeRepo employeeRepo, IDepartmentRepo departmentRepo, IMapper mapper)
+        public EmployeeService(IEmployeeRepo employeeRepo, IDepartmentService departmentService, IMapper mapper)
         {
             _employeeRepo = employeeRepo;
-            _departmentRepo = departmentRepo;
+            _departmentService = departmentService;
             _mapper = mapper;
         }
 
@@ -55,8 +55,9 @@ namespace Tiers.BLL.Service.Implementation
         {
             try
             {
-                // 1- Get departments from department repo
-                var departments = await _departmentRepo.GetAllAsync(d => !d.IsDeleted);
+                // 1- Get departments from department service
+                var result = await _departmentService.GetAllAsync();
+                var departments = result.Result;
 
                 // 2- Create the CreateEmployeeVM and populate the Departments property
                 // by mapping departments to SelectListItems for the dropdown
@@ -130,7 +131,9 @@ namespace Tiers.BLL.Service.Implementation
                 var mappedEmployee = _mapper.Map<UpdateEmployeeVM>(employee);
 
                 // 3. Get departments for the dropdown
-                var departments = await _departmentRepo.GetAllAsync(d => !d.IsDeleted);
+                var result = await _departmentService.GetAllAsync();
+                var departments = result.Result;
+
                 mappedEmployee.Departments = departments.Select(d => new SelectListItem
                 {
                     Value = d.Id.ToString(),
