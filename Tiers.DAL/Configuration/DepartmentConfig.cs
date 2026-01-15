@@ -25,11 +25,6 @@ namespace Tiers.DAL.Configuration
             builder.Property(d => d.CreatedOn)
                    .IsRequired();
 
-            builder.HasMany(d => d.Employees)
-                   .WithOne(e => e.Department)
-                   .HasForeignKey(e => e.DepartmentId)
-                   .OnDelete(DeleteBehavior.Restrict);
-
         }
     }
 }

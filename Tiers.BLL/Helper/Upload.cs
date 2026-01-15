@@ -7,6 +7,9 @@ namespace Tiers.BLL.Helper
         {
             try
             {
+                if (File == null || File.Length == 0)
+                    throw new ArgumentException("File is empty");
+
                 //catch the folder Path and the file name in server
                 // 1 ) Get Directory
                 string FolderPath = Directory.GetCurrentDirectory() + "/wwwroot/Files/" + FolderName;
@@ -36,7 +39,7 @@ namespace Tiers.BLL.Helper
         }
 
 
-        public static async Task<string> RemoveFileAsync(string FolderName, string fileName)
+        public static async Task<bool> RemoveFileAsync(string FolderName, string fileName)
         {
             try
             {
@@ -45,15 +48,16 @@ namespace Tiers.BLL.Helper
                 if (File.Exists(directory))
                 {
                     await Task.Run(() => File.Delete(directory));
-                    return "File Deleted";
+                    return true;
                 }
 
-                return "File Not Deleted";
+                return false;
 
             }
             catch (Exception ex)
             {
-                return ex.Message;
+                Console.WriteLine(ex.Message);
+                throw;
             }
         }
 

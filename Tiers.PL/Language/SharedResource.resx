@@ -123,6 +123,9 @@
   <data name="Age" xml:space="preserve">
     <value>Age</value>
   </data>
+  <data name="AppDescription" xml:space="preserve">
+    <value>A professional 3-Tier architecture solution for managing your organization's workforce.</value>
+  </data>
   <data name="Arabic" xml:space="preserve">
     <value>Arabic</value>
   </data>
@@ -131,6 +134,9 @@
   </data>
   <data name="Create" xml:space="preserve">
     <value>Create</value>
+  </data>
+  <data name="Create New Department" xml:space="preserve">
+    <value>Create New Department</value>
   </data>
   <data name="Create New Employee" xml:space="preserve">
     <value>Create New Employee</value>
@@ -147,11 +153,20 @@
   <data name="Departments" xml:space="preserve">
     <value>Departments</value>
   </data>
+  <data name="DeptDesc" xml:space="preserve">
+    <value>Organize your company structure, create new units, and manage regional areas.</value>
+  </data>
   <data name="Details" xml:space="preserve">
     <value>Details</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
+  </data>
+  <data name="EmpDesc" xml:space="preserve">
+    <value>View, search, and manage staff profiles, salaries, and departmental assignments.</value>
+  </data>
+  <data name="EmployeeCount" xml:space="preserve">
+    <value>Employee Count</value>
   </data>
   <data name="Employees" xml:space="preserve">
     <value>Employees</value>
@@ -162,6 +177,15 @@
   <data name="ID" xml:space="preserve">
     <value>ID</value>
   </data>
+  <data name="Location" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="ManageDepartments" xml:space="preserve">
+    <value>Manage Departments</value>
+  </data>
+  <data name="ManageEmployees" xml:space="preserve">
+    <value>Manage Employees</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
@@ -169,12 +193,15 @@
     <value>Photo</value>
   </data>
   <data name="Project" xml:space="preserve">
-    <value>Task</value>
+    <value>HR Manager</value>
   </data>
   <data name="Salary" xml:space="preserve">
     <value>Salary</value>
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>Welcome</value>
+  </data>
+  <data name="WelcomeTitle" xml:space="preserve">
+    <value>Welcome to HR Manager</value>
   </data>
 </root>

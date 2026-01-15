@@ -1,8 +1,53 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = SharedLocalizer["Home"];
 }
 
-<div class="text-center">
-    <h1 class="display-4">@SharedLocalizer["Welcome"]</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="p-5 mb-4 bg-light rounded-3 shadow-sm text-center border">
+    <div class="container-fluid py-4">
+        <h1 class="display-5 fw-bold text-primary">@SharedLocalizer["WelcomeTitle"]</h1>
+
+        <p class="col-md-8 fs-4 mx-auto text-muted">
+            @SharedLocalizer["AppDescription"]
+        </p>
+
+        <div class="mt-4">
+            <a class="btn btn-primary btn-lg px-4 gap-3 shadow-sm" asp-controller="Employee" asp-action="Index">
+                <i class="bi bi-people-fill"></i> @SharedLocalizer["ManageEmployees"]
+            </a>
+        </div>
+    </div>
 </div>
+
+<div class="row align-items-md-stretch">
+
+    <div class="col-md-6 mb-4">
+        <div class="h-100 p-5 text-white bg-dark rounded-3 shadow hover-card">
+            <h2 class="fw-bold">@SharedLocalizer["Employees"]</h2>
+            <p class="fs-5 opacity-75">@SharedLocalizer["EmpDesc"]</p>
+            <a class="btn btn-outline-light mt-3" asp-controller="Employee" asp-action="Index">
+                @SharedLocalizer["ManageEmployees"] &rarr;
+            </a>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-4">
+        <div class="h-100 p-5 bg-white border rounded-3 shadow-sm hover-card">
+            <h2 class="fw-bold text-dark">@SharedLocalizer["Departments"]</h2>
+            <p class="fs-5 text-muted">@SharedLocalizer["DeptDesc"]</p>
+            <a class="btn btn-outline-secondary mt-3" asp-controller="Department" asp-action="Index">
+                @SharedLocalizer["ManageDepartments"] &rarr;
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hover-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .hover-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
+        }
+</style>

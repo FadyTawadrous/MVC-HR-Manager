@@ -14,7 +14,7 @@ namespace Tiers.DAL.Entity
         public string? UpdatedBy { get; private set; }
         public bool IsDeleted { get; private set; }
 
-        public virtual ICollection<Employee>? Employees { get; private set; }
+        public virtual ICollection<Employee>? Employees { get; private set; } = new List<Employee>();
         public Department() { }
         public Department(string name, string area, string createdBy)
         {

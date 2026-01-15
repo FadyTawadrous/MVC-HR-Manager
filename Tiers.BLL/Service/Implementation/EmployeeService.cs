@@ -234,10 +234,10 @@ namespace Tiers.BLL.Service.Implementation
                 }
 
                 // 3- Delete the image from disk (only if delete was successful)
-                if (toggleResult && !string.IsNullOrEmpty(employeeToDelete.ImageUrl))
-                {
-                    await Upload.RemoveFileAsync("Images", employeeToDelete.ImageUrl);
-                }
+                //if (toggleResult && !string.IsNullOrEmpty(employeeToDelete.ImageUrl))
+                //{
+                //    await Upload.RemoveFileAsync("Images", employeeToDelete.ImageUrl);
+                //}
 
                 return new ResponseResult<bool>(toggleResult, null, toggleResult);
             }

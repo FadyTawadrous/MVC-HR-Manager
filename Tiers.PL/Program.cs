@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
-using Tiers.BLL.AutoMapper;
 using Tiers.BLL.Common;
 using Tiers.DAL.Common;
 using Tiers.DAL.Database;
@@ -58,10 +57,6 @@ namespace Tiers.PL
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            app.UseRouting();
-
-            app.UseAuthorization();
-
             app.UseRequestLocalization(new RequestLocalizationOptions
             {
                 DefaultRequestCulture = new RequestCulture("en-US"),
@@ -73,6 +68,13 @@ namespace Tiers.PL
                 new CookieRequestCultureProvider()
                 }
             });
+
+            app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+           
 
             app.MapControllerRoute(
                 name: "default",

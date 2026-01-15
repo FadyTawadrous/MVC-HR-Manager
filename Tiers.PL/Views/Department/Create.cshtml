@@ -1,41 +1,51 @@
 ﻿@model CreateDepartmentVM
 
 @{
-    ViewData["Title"] = "Create Department";
+    ViewData["Title"] = SharedLocalizer["Create New Department"];
 }
-
-<h2>Create Department</h2>
-<hr />
 
 <div class="row">
     <div class="col-md-6">
-        <form asp-action="Create" method="post">
-            @Html.AntiForgeryToken()
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="form-group">
-                <label asp-for="Name" class="form-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+        <div class="card shadow-sm">
+
+            <div class="card-header bg-primary text-white">
+                <h3 class="card-title">@SharedLocalizer["Create New Department"]</h3>
             </div>
 
-            <div class="form-group">
-                <label asp-for="Area" class="form-label"></label>
-                <input asp-for="Area" class="form-control" />
-                <span asp-validation-for="Area" class="text-danger"></span>
-            </div>
+            <div class="card-body">
+                <form asp-action="Create" method="post">
+                    @Html.AntiForgeryToken()
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="form-group">
-                <label asp-for="CreatedBy" class="form-label">Created By</label>
-                <input asp-for="CreatedBy" class="form-control" />
-                <span asp-validation-for="CreatedBy" class="text-danger"></span>
-            </div>
+                    <div class="form-group">
+                        <label asp-for="Name" class="form-label">@SharedLocalizer["Name"]</label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
 
-            <div class="form-group mt-3">
-                <input type="submit" value="Create" class="btn btn-primary" />
-                <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
+                    <div class="form-group">
+                        <label asp-for="Area" class="form-label">@SharedLocalizer["Location"]</label>
+                        <input asp-for="Area" class="form-control" />
+                        <span asp-validation-for="Area" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="CreatedBy" class="form-label">@SharedLocalizer["Created By"]</label>
+                        <input asp-for="CreatedBy" class="form-control" />
+                        <span asp-validation-for="CreatedBy" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <input type="submit" value=@SharedLocalizer["Create"] class="btn btn-primary" />
+                        <a asp-action="Index" class="btn btn-outline-secondary">@SharedLocalizer["Back"]</a>
+                    </div>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
 </div>
 
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

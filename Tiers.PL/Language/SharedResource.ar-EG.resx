@@ -123,6 +123,9 @@
   <data name="Age" xml:space="preserve">
     <value>العمر</value>
   </data>
+  <data name="AppDescription" xml:space="preserve">
+    <value>برنامج احترافي لإدارة القوى العاملة في مؤسستك</value>
+  </data>
   <data name="Arabic" xml:space="preserve">
     <value>العربية</value>
   </data>
@@ -131,6 +134,9 @@
   </data>
   <data name="Create" xml:space="preserve">
     <value>انشاء</value>
+  </data>
+  <data name="Create New Department" xml:space="preserve">
+    <value>انشاء قسم جديد</value>
   </data>
   <data name="Create New Employee" xml:space="preserve">
     <value>انشاء موظف جديد</value>
@@ -147,20 +153,38 @@
   <data name="Departments" xml:space="preserve">
     <value>الاقسام</value>
   </data>
+  <data name="DeptDesc" xml:space="preserve">
+    <value>قم بتنظيم هيكل شركتك، وإنشاء وحدات جديدة، وإدارة المناطق الإقليمية.</value>
+  </data>
   <data name="Details" xml:space="preserve">
     <value>تفاصيل</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>تعديل</value>
   </data>
+  <data name="EmpDesc" xml:space="preserve">
+    <value>عرض ملفات تعريف الموظفين ورواتبهم ومهامهم الإدارية والبحث عنها وإدارتها.</value>
+  </data>
+  <data name="EmployeeCount" xml:space="preserve">
+    <value>عدد الموظفين</value>
+  </data>
   <data name="Employees" xml:space="preserve">
-    <value>الموظفيين</value>
+    <value>الموظفين</value>
   </data>
   <data name="English" xml:space="preserve">
     <value>الانجليزية</value>
   </data>
   <data name="ID" xml:space="preserve">
     <value>رقم التعريف</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>الموقع</value>
+  </data>
+  <data name="ManageDepartments" xml:space="preserve">
+    <value>إدارة الأقسام</value>
+  </data>
+  <data name="ManageEmployees" xml:space="preserve">
+    <value>إدارة الموظفين</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>الاسم</value>
@@ -169,12 +193,15 @@
     <value>الصورة</value>
   </data>
   <data name="Project" xml:space="preserve">
-    <value>الواجب</value>
+    <value>مدير الموارد البشرية</value>
   </data>
   <data name="Salary" xml:space="preserve">
     <value>المرتب</value>
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>مرحباََ</value>
+  </data>
+  <data name="WelcomeTitle" xml:space="preserve">
+    <value>إدارة الموارد البشرية</value>
   </data>
 </root>

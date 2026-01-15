@@ -4,10 +4,6 @@ namespace Tiers.DAL.Database
 {
     public class ApplicationDbContext : DbContext
     {
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer("Server=.;Database=TiersDB;Trusted_Connection=True;TrustServerCertificate=True;Encrypt=False");
-        //}
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {

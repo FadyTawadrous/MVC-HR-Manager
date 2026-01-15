@@ -85,7 +85,7 @@ namespace Tiers.DAL.Repo.Implementation
                 {
                     return false;
                 }
-                bool result = oldDepartment.Update(newDepartment.Name, newDepartment.Area, newDepartment.UpdatedBy);
+                bool result = oldDepartment.Update(newDepartment.Name, newDepartment.Area, newDepartment.UpdatedBy ?? "System");
                 if (result)
                 {
                     await _db.SaveChangesAsync();
